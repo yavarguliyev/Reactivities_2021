@@ -2,40 +2,40 @@
 
 ## server-side
 
-> commands that giving dotnet command information
+> `commands that giving dotnet command information`
 
 - dotnet --info
 - dotnet -h
 - dotnet new -l
 - dotnet tool list --global
 
-> commands that creating new git ignore file
+> `command that creates new git ignore file`
 
 - dotnet new gitignore
 
-> commands that creating new solution file
+> `command that creaties new solution file`
 
 - dotnet new sln -n Reactivities
 
-> commands that creating new api or class lib
+> `commands that creating new api or class lib`
 
 - dotnet new webapi -n API
 - dotnet new classlib -n Application
 - dotnet new classlib -n Domain
 - dotnet new classlib -n Persistance
 
-> commands that adding solution file to the existing projects
+> `commands that adding solution file to the existing projects`
 
 - dotnet sln add API/API.csproj
 - dotnet sln add Application/Application.csproj
 - dotnet sln add Domain/Domain.csproj
 - dotnet sln add Persistance/Persistance.csproj
 
-> commands that showing solution list
+> `command that shows solution list`
 
 - dotnet sln list
 
-> commands that adding references between projects
+> `commands that adding references between projects`
 
 - cd API/
 - dotnet add reference ../Application
@@ -47,19 +47,30 @@
 - cd Persistance/
 - dotnet add reference ../
 
-> commands that can run API
+> `commands that can run API`
 
 - dotnet run
 - dotnet watch run
 
-> commands for creating database
+> `command for creating database`
 
 - dotnet ef migrations add initial -p Persistence/ -s API/
 
-> commands for updating database
+> `command for updating database`
 
 - dotnet ef database update -p Persistence/ -s API/
 
-> commands for resetting database
+> `command for resetting database`
 
 - dotnet ef database drop -p Persistence/ -s API
+
+## client_side
+
+> `command that creates new react-app project with typescript`
+
+- npx create-react-app client_side --use-npm --template typescript
+
+> `dependencies`
+
+- npm install axios
+- npm install semantic-ui-react semantic-ui-css
