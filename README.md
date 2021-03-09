@@ -64,17 +64,6 @@
 
 - dotnet ef database drop -p Persistence/ -s API
 
-## client_side
-
-> `command that creates new react-app project with typescript`
-
-- npx create-react-app client_side --use-npm --template typescript
-
-> `dependencies`
-
-- npm install axios
-- npm install semantic-ui-react semantic-ui-css
-
 > `for setting date in postman`
 
 ```javascript
@@ -88,3 +77,15 @@ pm.environment.set('activityDate', moment().add(14, 'days').toISOString())
 ```javascript
 pm.environment.set('TOKEN', pm.response.json().token)
 ```
+
+## client_side
+
+> `command that creates new react-app project with typescript`
+
+- npx create-react-app client_side --use-npm --template typescript
+
+> `dependencies`
+
+- npm install axios
+- npm install semantic-ui-react semantic-ui-css
+- npm install uuid
