@@ -74,3 +74,17 @@
 
 - npm install axios
 - npm install semantic-ui-react semantic-ui-css
+
+> `for setting date in postman`
+
+```javascript
+var moment = require('moment')
+
+pm.environment.set('activityDate', moment().add(14, 'days').toISOString())
+```
+
+> `setting token in postman`
+
+```javascript
+pm.environment.set('TOKEN', pm.response.json().token)
+```
