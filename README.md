@@ -90,3 +90,5 @@ pm.environment.set('TOKEN', pm.response.json().token)
 - npm install semantic-ui-react semantic-ui-css
 - npm install uuid
 - npm install mobx mobx-react-lite
+- npm install react-router-dom
+- npm install @types/react-router-dom --save-dev
