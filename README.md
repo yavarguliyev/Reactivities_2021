@@ -89,3 +89,4 @@ pm.environment.set('TOKEN', pm.response.json().token)
 - npm install axios
 - npm install semantic-ui-react semantic-ui-css
 - npm install uuid
+- npm install mobx mobx-react-lite
