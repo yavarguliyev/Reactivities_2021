@@ -93,3 +93,4 @@ pm.environment.set('TOKEN', pm.response.json().token)
 - npm install react-router-dom
 - npm install @types/react-router-dom --save-dev
 - npm install react-calendar @types/react-calendar
+- npm install react-toastify
