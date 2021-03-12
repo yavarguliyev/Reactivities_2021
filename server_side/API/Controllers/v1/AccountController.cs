@@ -15,21 +15,23 @@ namespace API.Controllers.v1
   [Route("api/v1/[controller]")]
   public class AccountController : ControllerBase
   {
-    private readonly UserManager<AppUser> _userManger;
+    private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _singInManager;
     private readonly TokenService _tokenService;
 
-    public AccountController(UserManager<AppUser> userManger, SignInManager<AppUser> singInManager, TokenService tokenService)
+    public AccountController(UserManager<AppUser> userManager,
+                             SignInManager<AppUser> singInManager,
+                             TokenService tokenService)
     {
       _singInManager = singInManager;
-      _userManger = userManger;
+      _userManager = userManager;
       _tokenService = tokenService;
     }
 
     [HttpPost]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
-      var user = await _userManger.FindByEmailAsync(loginDto.Email);
+      var user = await _userManager.FindByEmailAsync(loginDto.Email);
       if (user == null) return Unauthorized();
 
       var result = await _singInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
@@ -38,12 +40,20 @@ namespace API.Controllers.v1
       return Unauthorized();
     }
 
-    [HttpPost("Register")]
+    [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
-      if (await _userManger.Users.AnyAsync(x => x.Email == registerDto.Email)) return BadRequest("Email taken");
+      if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
+      {
+        ModelState.AddModelError("email", "Email taken");
+        return ValidationProblem();
+      }
 
-      if (await _userManger.Users.AnyAsync(x => x.UserName == registerDto.Username)) return BadRequest("Username taken");
+      if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
+      {
+        ModelState.AddModelError("username", "Username taken");
+        return ValidationProblem();
+      }
 
       var user = new AppUser
       {
@@ -52,7 +62,7 @@ namespace API.Controllers.v1
         UserName = registerDto.Username
       };
 
-      var result = await _userManger.CreateAsync(user, registerDto.Password);
+      var result = await _userManager.CreateAsync(user, registerDto.Password);
 
       if (result.Succeeded) return CreateUserObject(user);
 
@@ -63,7 +73,7 @@ namespace API.Controllers.v1
     [HttpGet]
     public async Task<ActionResult<UserDto>> GetCurrentUser()
     {
-      var user = await _userManger.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+      var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
 
       return CreateUserObject(user);
     }
