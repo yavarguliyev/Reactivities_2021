@@ -94,3 +94,12 @@ pm.environment.set('TOKEN', pm.response.json().token)
 - npm install @types/react-router-dom --save-dev
 - npm install react-calendar @types/react-calendar
 - npm install react-toastify
+- npm install formik
+- npm install yup
+- npm install @types/yup --save-dev
+- npm install react-datepicker
+- npm install react-datepicker --legacy-peer-deps --- in case if you get error
+- npm install @types/react-datepicker --save-dev
+- npm ls date-fns
+- npm install date-fns@(version that is showing there)
+- [date-fns documentation](https://date-fns.org)
