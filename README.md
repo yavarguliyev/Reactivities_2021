@@ -2,6 +2,8 @@
 
 ## server-side
 
+[nuget packages](https://www.nuget.org/packages)
+
 > `commands that giving dotnet command information`
 
 - dotnet --info
@@ -47,10 +49,18 @@
 - cd Persistance/
 - dotnet add reference ../
 
+> `commands that update dotnet ef tool`
+
+- dotnet tool update --global dotnet-ef
+
 > `commands that can run API`
 
 - dotnet run
 - dotnet watch run
+
+> `command for creating database`
+
+- dotnet restore --- in order if the c# extension does not work
 
 > `command for creating database`
 
@@ -59,6 +69,11 @@
 > `command for updating database`
 
 - dotnet ef database update -p Persistence/ -s API/
+
+```javascript
+The meaning of '-p' is project where is data context, and '-s' where you forward the flag.
+
+```
 
 > `command for resetting database`
 

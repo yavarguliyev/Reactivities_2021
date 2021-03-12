@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Domain.Entities;
 using System;
 using Application.Handlers.Activities;

@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
+using Domain.Entities;
 
 namespace API
 {
@@ -22,8 +24,9 @@ namespace API
       try
       {
         var context = services.GetRequiredService<DataContext>();
+        var user = services.GetRequiredService<UserManager<AppUser>>();
         await context.Database.MigrateAsync();
-        await Seed.SeedData(context);
+        await Seed.SeedData(context, user);
       }
       catch (Exception ex)
       {
