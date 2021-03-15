@@ -25,6 +25,7 @@
 - dotnet new classlib -n Application
 - dotnet new classlib -n Domain
 - dotnet new classlib -n Persistance
+- dotnet new classlib -n Infrastructure
 
 > `commands that adding solution file to the existing projects`
 
@@ -32,6 +33,7 @@
 - dotnet sln add Application/Application.csproj
 - dotnet sln add Domain/Domain.csproj
 - dotnet sln add Persistance/Persistance.csproj
+- dotnet sln add Infrastructure/Infrastructure.csproj
 
 > `command that shows solution list`
 
@@ -41,13 +43,17 @@
 
 - cd API/
 - dotnet add reference ../Application
+- dotnet add reference ../Infrastructure
 - cd ..
 - cd Application/
 - dotnet add reference ../Persistance
 - dotnet add reference ../Domain
 - cd ..
 - cd Persistance/
-- dotnet add reference ../
+- dotnet add reference ../Domain
+- cd Infrastructure
+- dotnet add reference ../Application
+- (dotnet restore --- to make all of our projects be aware of dependencies)
 
 > `commands that update dotnet ef tool`
 
@@ -70,6 +76,10 @@
 
 - dotnet ef database update -p Persistence/ -s API/
 
+> `command for deleting last migration`
+
+- dotnet ef migrations remove -p Persistence/ -s API/
+
 ```javascript
 The meaning of '-p' is project where is data context, and '-s' where you forward the flag.
 
@@ -91,6 +101,23 @@ pm.environment.set('activityDate', moment().add(14, 'days').toISOString())
 
 ```javascript
 pm.environment.set('TOKEN', pm.response.json().token)
+```
+
+```javascript
+const user = pm.response.json();
+
+pm.test("Has properties", function() {
+    pm.expect(user).to.have.property('token');
+});
+
+if(pm.test("Has properties")) {
+    pm.globals.set("TOKEN", user.token);
+}
+
+pm.test("Global token has been set", function() {
+    var token = pm.globals.get('TOKEN');
+    pm.expect(token).to.eql(user.token);
+});
 ```
 
 ## client_side
