@@ -4,9 +4,8 @@ import { Button, Header, Label } from 'semantic-ui-react';
 import MyTextInput from '../../app/common/form/MyTextInput';
 import { useStore } from '../../app/stores/store';
 
-const LoginForm = () => {
+export default observer(function LoginForm() {
   const { userStore } = useStore();
-
   return (
     <Formik
       initialValues={{ email: '', password: '', error: null }}
@@ -27,6 +26,4 @@ const LoginForm = () => {
       )}
     </Formik>
   )
-}
-
-export default observer(LoginForm);
+})

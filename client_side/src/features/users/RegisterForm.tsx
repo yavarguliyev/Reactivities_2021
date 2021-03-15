@@ -6,9 +6,8 @@ import { useStore } from '../../app/stores/store';
 import * as Yup from 'yup';
 import ValidationErrors from '../errors/ValidationErrors';
 
-const RegisterForm = () => {
+export default observer(function RegisterForm() {
   const { userStore } = useStore();
-
   return (
     <Formik
       initialValues={{ displayName: '', username: '', email: '', password: '', error: null }}
@@ -38,6 +37,4 @@ const RegisterForm = () => {
       )}
     </Formik>
   )
-}
-
-export default observer(RegisterForm);
+})

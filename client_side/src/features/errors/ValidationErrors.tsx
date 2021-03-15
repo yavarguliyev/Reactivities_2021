@@ -1,11 +1,10 @@
-import React from 'react';
 import { Message } from 'semantic-ui-react';
 
 interface Props {
   errors: any;
 }
 
-const ValidationErrors: React.FC<Props> = ({ errors }) => {
+export default function ValidationErrors({ errors }: Props) {
   return (
     <Message error>
       {errors && (
@@ -18,5 +17,3 @@ const ValidationErrors: React.FC<Props> = ({ errors }) => {
     </Message>
   )
 }
-
-export default ValidationErrors;

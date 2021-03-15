@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
   [DbContext(typeof(DataContext))]
-  [Migration("20210315113048_cancelled-property-added")]
+  [Migration("20210315135011_cancelled-property-added")]
   partial class cancelledpropertyadded
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,15 +53,15 @@ namespace Persistence.Migrations
             b.Property<string>("AppUserId")
                       .HasColumnType("TEXT");
 
-            b.Property<Guid>("ApctivityId")
+            b.Property<Guid>("ActivityId")
                       .HasColumnType("TEXT");
 
             b.Property<bool>("IsHost")
                       .HasColumnType("INTEGER");
 
-            b.HasKey("AppUserId", "ApctivityId");
+            b.HasKey("AppUserId", "ActivityId");
 
-            b.HasIndex("ApctivityId");
+            b.HasIndex("ActivityId");
 
             b.ToTable("ActivityAttendees");
           });
@@ -268,7 +268,7 @@ namespace Persistence.Migrations
           {
             b.HasOne("Domain.Entities.Activity", "Activity")
                       .WithMany("Attendees")
-                      .HasForeignKey("ApctivityId")
+                      .HasForeignKey("ActivityId")
                       .OnDelete(DeleteBehavior.Cascade)
                       .IsRequired();
 

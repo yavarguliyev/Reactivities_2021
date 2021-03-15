@@ -15,7 +15,7 @@ namespace Persistence
     {
       base.OnModelCreating(builder);
 
-      builder.Entity<ActivityAttendee>(x => x.HasKey(aa => new { aa.AppUserId, aa.ApctivityId }));
+      builder.Entity<ActivityAttendee>(x => x.HasKey(aa => new { aa.AppUserId, aa.ActivityId }));
 
       builder.Entity<ActivityAttendee>()
              .HasOne(u => u.AppUser)
@@ -25,7 +25,7 @@ namespace Persistence
       builder.Entity<ActivityAttendee>()
              .HasOne(u => u.Activity)
              .WithMany(a => a.Attendees)
-             .HasForeignKey(aa => aa.ApctivityId);
+             .HasForeignKey(aa => aa.ActivityId);
     }
   }
 }
