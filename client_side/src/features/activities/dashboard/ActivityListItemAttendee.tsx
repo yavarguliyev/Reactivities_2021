@@ -25,6 +25,7 @@ export default observer(function ActivityListItemAttendee({ attendees }: Props) 
               <Image
                 size='mini'
                 circular src={attendee.image || '/assets/user.png'}
+                bordered
               />
             </List.Item>
           }
@@ -33,6 +34,7 @@ export default observer(function ActivityListItemAttendee({ attendees }: Props) 
             <ProfileCard profile={attendee} />
           </Popup.Content>
         </Popup>
+
       ))}
     </List>
   )

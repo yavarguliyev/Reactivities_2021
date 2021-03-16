@@ -16,6 +16,8 @@ namespace API.Extensions
   {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration _configuration)
     {
+      services.AddRouting(options => options.LowercaseUrls = true);
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -47,6 +49,8 @@ namespace API.Extensions
       services.AddScoped<IPhotoAccessor, PhotoAccessor>();
 
       services.Configure<CloudinarySettings>(_configuration.GetSection("Cloudinary"));
+
+      services.AddSignalR();
 
       return services;
     }
