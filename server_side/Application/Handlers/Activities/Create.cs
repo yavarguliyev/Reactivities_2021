@@ -54,7 +54,7 @@ namespace Application.Handlers.Activities
 
         var result = await _context.SaveChangesAsync() > 0;
 
-        if (!result) return Result<Unit>.Failre("Failed to create activity");
+        if (!result) return Result<Unit>.Failure("Failed to create activity");
 
         return Result<Unit>.Success(Unit.Value);
       }
