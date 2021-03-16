@@ -15,4 +15,4 @@ export default function NotFound() {
       </Segment.Inline>
     </Segment>
   )
-}
+};

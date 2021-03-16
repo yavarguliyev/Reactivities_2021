@@ -87,5 +87,6 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
         </Comment.Group>
       </Segment>
     </>
+
   )
 });

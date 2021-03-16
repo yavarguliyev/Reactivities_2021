@@ -21,8 +21,7 @@ export default observer(function ProfileEditForm({ setEditMode }: Props) {
         })
       }}
       validationSchema={Yup.object({
-        displayName: Yup.string().required(),
-        bio: Yup.string()
+        displayName: Yup.string().required()
       })}
     >
       {({ isSubmitting, isValid, dirty }) => (
@@ -41,4 +40,4 @@ export default observer(function ProfileEditForm({ setEditMode }: Props) {
       )}
     </Formik>
   )
-})
+});
