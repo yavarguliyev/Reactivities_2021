@@ -21,4 +21,4 @@ export default observer(function ProfileCard({ profile }: Props) {
       </Card.Content>
     </Card>
   )
-})
+});

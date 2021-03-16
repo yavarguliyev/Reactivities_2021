@@ -145,3 +145,5 @@ pm.test("Global token has been set", function() {
 - npm ls date-fns
 - npm install date-fns@(version that is showing there)
 - [date-fns documentation](https://date-fns.org)
+- npm install react-dropzone
+- npm install react-cropper
