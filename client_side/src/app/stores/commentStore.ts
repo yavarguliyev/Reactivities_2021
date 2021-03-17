@@ -6,7 +6,6 @@ import { store } from "./store";
 class CommentStore {
   comments: ChatComment[] = [];
   hubConnection: HubConnection | null = null;
-  url: string = 'http://localhost:5001/chat';
 
   constructor() {
     makeAutoObservable(this);
@@ -15,7 +14,7 @@ class CommentStore {
   createHubConnection = (activityId: string) => {
     if (store.activityStore.selectedActivity) {
       this.hubConnection = new HubConnectionBuilder()
-        .withUrl(this.url + '?activityId=' + activityId, {
+        .withUrl(process.env.REACT_APP_CHAT_URL + '?activityId=' + activityId, {
           accessTokenFactory: () => store.userStore.user?.token!
         })
         .withAutomaticReconnect()

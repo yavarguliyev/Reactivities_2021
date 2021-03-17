@@ -174,3 +174,7 @@ pm.test('has pagination header', function () {
 - npm install @microsoft/signalr
 - npm install --save react-infinite-scroll --- or --- npm install react-infinite-scroller --legacy-peer-deps
 - npm install @types/react-infinite-scroller
+
+# Publish
+
+- docker run --name dev -e POSTGRES_USER=admin -e POSTGRE_PASSWORD=secret -p 5432:5432 -d postgres:latest
