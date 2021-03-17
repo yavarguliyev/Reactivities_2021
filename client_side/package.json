@@ -40,7 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "rimraf ../server_side/API/wwwroot && mv build ../API/wwwroot",
+    "postbuild": "mv build ../server_side/API/wwwroot",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

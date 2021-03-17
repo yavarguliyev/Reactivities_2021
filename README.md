@@ -178,3 +178,12 @@ pm.test('has pagination header', function () {
 # Publish
 
 - docker run --name dev -e POSTGRES_USER=admin -e POSTGRE_PASSWORD=secret -p 5432:5432 -d postgres:latest
+
+- [heroku](https://dashboard.heroku.com)
+
+```javascript
+  heroku login
+  heroku git:remote -a yavar-activities
+```
+
+- [dotnet buildpack](https://github.com/jincod/dotnetcore-buildpack)
