@@ -45,7 +45,7 @@ function App() {
               <Switch>
                 <PrivateRoute exact path='/activities' component={ActivityDashboard} />
                 <PrivateRoute path='/activities/:id' component={ActivityDetails} />
-                <PrivateRoute key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
+                <PrivateRoute key={location.key} path={['/create-activity', '/manage/:id']} component={ActivityForm} />
                 <PrivateRoute path='/profiles/:username' component={ProfilePage} />
                 <PrivateRoute path='/errors' component={TestError} />
                 <Route path='/server-error' component={ServerError} />
