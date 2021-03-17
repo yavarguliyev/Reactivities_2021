@@ -187,3 +187,13 @@ pm.test('has pagination header', function () {
 ```
 
 - [dotnet buildpack](https://github.com/jincod/dotnetcore-buildpack)
+
+```javascript
+- git push heroku main
+```
+
+```javascript
+https://yavar-activities.herokuapp.com/
+```
+
+- [http security checker](https://securityheaders.com)
