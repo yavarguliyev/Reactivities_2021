@@ -28,14 +28,14 @@ export default function ActivityListItem({ activity }: Props) {
                 <Item.Description>
                   <Label basic color='orange'>
                     You are hosting this activity
-                                    </Label>
+                                  </Label>
                 </Item.Description>
               )}
               {activity.isGoing && !activity.isHost && (
                 <Item.Description>
                   <Label basic color='green'>
                     You are going to this activity
-                                    </Label>
+                                  </Label>
                 </Item.Description>
               )}
             </Item.Content>

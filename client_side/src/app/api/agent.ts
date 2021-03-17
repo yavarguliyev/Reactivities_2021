@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { history } from '../..';
 import { Activity, ActivityFormValues } from '../models/activity';
+import { PaginatedResult } from '../models/pagination';
 import { Photo, Profile, UserActivity } from '../models/profile';
 import { User, UserFormValues } from '../models/user';
 import { store } from '../stores/store';
@@ -21,15 +22,24 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(async response => {
-  await sleep(1000);
+  if (process.env.NODE_ENV === 'development') await sleep(1000);
+
+  const pagination = response.headers['pagination'];
+
+  if (pagination) {
+    response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+    return response as AxiosResponse<PaginatedResult<any>>
+  }
+
   return response;
 }, (error: AxiosError) => {
-  const { data, status, config } = error.response!;
+  const { data, status, config, headers } = error.response!;
   switch (status) {
     case 400:
       if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
         history.push('/not-found');
       }
+
       if (data.errors) {
         const modalStateErrors = [];
         for (const key in data.errors) {
@@ -43,7 +53,10 @@ axios.interceptors.response.use(async response => {
       }
       break;
     case 401:
-      toast.error('unauthorised');
+      if (status === 401 && headers['www-authenticate']?.startsWith('Bearer error="invalid_token"')) {
+        store.userStore.logout();
+        toast.error('Session expired - please login again');
+      }
       break;
     case 404:
       history.push('/not-found');
@@ -53,9 +66,8 @@ axios.interceptors.response.use(async response => {
       history.push('/server-error');
       break;
   }
-
   return Promise.reject(error);
-});
+})
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
@@ -67,7 +79,8 @@ const requests = {
 };
 
 const Activities = {
-  list: () => requests.get<Activity[]>('/activities'),
+  list: (params: URLSearchParams) => axios.get<PaginatedResult<Activity[]>>('/activities', { params })
+    .then(responseBody),
   details: (id: string) => requests.get<Activity>(`/activities/${id}`),
   create: (activity: ActivityFormValues) => requests.post<void>('/activities', activity),
   update: (activity: ActivityFormValues) => requests.put<void>(`/activities/${activity.id}`, activity),

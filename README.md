@@ -104,20 +104,44 @@ pm.environment.set('TOKEN', pm.response.json().token)
 ```
 
 ```javascript
-const user = pm.response.json();
+const user = pm.response.json()
 
-pm.test("Has properties", function() {
-    pm.expect(user).to.have.property('token');
-});
+pm.test('Has properties', function () {
+  pm.expect(user).to.have.property('token')
+})
 
-if(pm.test("Has properties")) {
-    pm.globals.set("TOKEN", user.token);
+if (pm.test('Has properties')) {
+  pm.globals.set('TOKEN', user.token)
 }
 
-pm.test("Global token has been set", function() {
-    var token = pm.globals.get('TOKEN');
-    pm.expect(token).to.eql(user.token);
-});
+pm.test('Global token has been set', function () {
+  var token = pm.globals.get('TOKEN')
+  pm.expect(token).to.eql(user.token)
+})
+```
+
+> `setting pagination header in postman`
+
+```javascript
+var data = pm.response.json()
+
+pm.test('response is 200', function () {
+  pm.response.to.have.status(200)
+})
+
+pm.test('has all properties', function () {
+  pm.expect(data[0]).to.have.property('id')
+  pm.expect(data[0]).to.have.property('title')
+  pm.expect(data[0]).to.have.property('description')
+  pm.expect(data[0]).to.have.property('date')
+  pm.expect(data[0]).to.have.property('city')
+  pm.expect(data[0]).to.have.property('venue')
+  pm.expect(data[0]).to.have.property('attendees')
+})
+
+pm.test('has pagination header', function () {
+  pm.response.to.have.header('pagination')
+})
 ```
 
 ## client_side
@@ -148,3 +172,5 @@ pm.test("Global token has been set", function() {
 - npm install react-dropzone
 - npm install react-cropper
 - npm install @microsoft/signalr
+- npm install --save react-infinite-scroll --- or --- npm install react-infinite-scroller --legacy-peer-deps
+- npm install @types/react-infinite-scroller

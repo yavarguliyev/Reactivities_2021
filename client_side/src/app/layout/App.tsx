@@ -10,14 +10,14 @@ import TestError from '../../features/errors/TestErrors';
 import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/errors/NotFound';
 import ServerError from '../../features/errors/ServerError';
-import LoginForm from '../../features/users/LoginForm';
 import { useStore } from '../stores/store';
 import { useEffect } from 'react';
 import LoadingComponents from './LoadingComponents';
 import ModalContainer from '../common/modals/ModalContainer';
 import ProfilePage from '../../features/profiles/ProfilePage';
+import PrivateRoute from './PrivateRoute';
 
-const App = () => {
+function App() {
   const { commonStore: { token, setAppLoaded, appLoaded }, userStore: { getUser } } = useStore();
   const location = useLocation();
 
@@ -41,20 +41,22 @@ const App = () => {
         render={() => (
           <>
             <NavBar />
-            <Container style={{ marginTop: '7rem' }}>
+            <Container style={{ marginTop: '7em' }}>
               <Switch>
-                <Route exact path='/activities' component={ActivityDashboard} />
-                <Route path='/activities/:id' component={ActivityDetails} />
-                <Route key={location.key} path={['/create-activity', '/manage/:id']} component={ActivityForm} />
-                <Route path='/profiles/:username' component={ProfilePage} />
-                <Route path='/errors' component={TestError} />
+                <PrivateRoute exact path='/activities' component={ActivityDashboard} />
+                <PrivateRoute path='/activities/:id' component={ActivityDetails} />
+                <PrivateRoute key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
+                <PrivateRoute path='/profiles/:username' component={ProfilePage} />
+                <PrivateRoute path='/errors' component={TestError} />
                 <Route path='/server-error' component={ServerError} />
-                <Route path='/login' component={LoginForm} />
+                {/* <Route path='/account/registerSuccess' component={RegisterSuccess} />
+                <Route path='/account/verifyEmail' component={ConfirmEmail} /> */}
                 <Route component={NotFound} />
               </Switch>
             </Container>
-          </>)} />
-
+          </>
+        )}
+      />
     </>
   );
 }

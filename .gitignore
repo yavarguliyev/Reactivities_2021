@@ -1,3 +1,6 @@
 # misc
-.vscode
 .DS_Store
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/launch.json

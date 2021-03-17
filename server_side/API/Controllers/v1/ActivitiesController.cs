@@ -10,9 +10,9 @@ namespace API.Controllers.v1
   public class ActivitiesController : BaseApiController
   {
     [HttpGet]
-    public async Task<IActionResult> GetActivities()
+    public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
     {
-      return HandleResult(await Mediator.Send(new List.Query()));
+      return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
     }
 
     [HttpGet("{id}")]
@@ -35,6 +35,7 @@ namespace API.Controllers.v1
       return HandleResult(await Mediator.Send(new Edit.Command { Activity = activity }));
     }
 
+    [Authorize(Policy = "IsActivityHost")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteActivity(Guid id)
     {
