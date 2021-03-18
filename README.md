@@ -219,4 +219,5 @@ facebook test accounts
 
 ```javascript
 git checkout -b fbLogin
+git checkout main
 ```
