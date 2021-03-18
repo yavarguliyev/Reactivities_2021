@@ -222,3 +222,5 @@ git checkout -b [new branch]
 git checkout main
 git merge [branch name]
 ```
+
+- [using the fake email address for checking the email confirmation](https://10minutemail.net)

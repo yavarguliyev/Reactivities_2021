@@ -26,4 +26,4 @@ export default observer(function LoginForm() {
       )}
     </Formik>
   )
-})
+});

@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
+using Infrastructure.Email;
 
 namespace API.Controllers.v1
 {
@@ -27,17 +28,20 @@ namespace API.Controllers.v1
     private readonly SignInManager<AppUser> _signInManager;
     private readonly TokenService _tokenService;
     private readonly IConfiguration _config;
+    private readonly EmailSender _emailSender;
     private readonly HttpClient _httpClient;
 
     public AccountController(UserManager<AppUser> userManager,
                              SignInManager<AppUser> signInManager,
                              TokenService tokenService,
-                             IConfiguration config)
+                             IConfiguration config,
+                             EmailSender emailSender)
     {
       _userManager = userManager;
       _signInManager = signInManager;
       _tokenService = tokenService;
       _config = config;
+      _emailSender = emailSender;
       _httpClient = new HttpClient
       {
         BaseAddress = new System.Uri("https://graph.facebook.com")
@@ -98,10 +102,10 @@ namespace API.Controllers.v1
       var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
       token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
-      // var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
-      // var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
+      var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
+      var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
 
-      // await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
+      await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
 
       return Ok("Registration success - please verify email");
     }
@@ -133,10 +137,10 @@ namespace API.Controllers.v1
       var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
       token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
-      // var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
-      // var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
+      var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
+      var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
 
-      // await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
+      await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
 
       return Ok("Email verification link resent");
     }
