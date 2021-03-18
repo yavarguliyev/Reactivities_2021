@@ -6,7 +6,7 @@ import { store } from './store';
 import { Profile } from '../models/profile';
 import { Pagination, PagingParams } from '../models/pagination';
 
-class ActivityStore {
+export default class ActivityStore {
   activityRegistry = new Map<string, Activity>();
   selectedActivity: Activity | undefined = undefined;
   editMode = false;
@@ -39,6 +39,7 @@ class ActivityStore {
         if (key !== 'startDate') this.predicate.delete(key);
       })
     }
+
     switch (predicate) {
       case 'all':
         resetPredicate();
@@ -251,5 +252,3 @@ class ActivityStore {
     this.selectedActivity = undefined;
   }
 }
-
-export default ActivityStore;

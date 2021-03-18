@@ -24,4 +24,4 @@ export default class ModalStore {
     this.modal.open = false;
     this.modal.body = null;
   }
-};
+}

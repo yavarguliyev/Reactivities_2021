@@ -11,7 +11,7 @@ const sleep = (delay: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, delay)
   })
-};
+}
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -19,18 +19,15 @@ axios.interceptors.request.use(config => {
   const token = store.commonStore.token;
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config;
-});
+})
 
 axios.interceptors.response.use(async response => {
   if (process.env.NODE_ENV === 'development') await sleep(1000);
-
   const pagination = response.headers['pagination'];
-
   if (pagination) {
     response.data = new PaginatedResult(response.data, JSON.parse(pagination));
     return response as AxiosResponse<PaginatedResult<any>>
   }
-
   return response;
 }, (error: AxiosError) => {
   const { data, status, config, headers } = error.response!;
@@ -39,7 +36,6 @@ axios.interceptors.response.use(async response => {
       if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
         history.push('/not-found');
       }
-
       if (data.errors) {
         const modalStateErrors = [];
         for (const key in data.errors) {
@@ -90,9 +86,16 @@ const Activities = {
 
 const Account = {
   current: () => requests.get<User>('/account'),
-  login: (user: UserFormValues) => requests.post<User>('/account', user),
-  register: (user: UserFormValues) => requests.post<User>('/account/register', user)
-};
+  login: (user: UserFormValues) => requests.post<User>('/account/login', user),
+  register: (user: UserFormValues) => requests.post<User>('/account/register', user),
+  fbLogin: (accessToken: string) => requests
+    .post<User>(`/account/fbLogin?accessToken=${accessToken}`, {}),
+  refreshToken: () => requests.post<User>('/account/refreshToken', {}),
+  verifyEmail: (token: string, email: string) =>
+    requests.post<void>(`/account/verifyEmail?token=${token}&email=${email}`, {}),
+  resendEmailConfirm: (email: string) =>
+    requests.get(`/account/resendEmailConfirmationLink?email=${email}`)
+}
 
 const Profiles = {
   get: (username: string) => requests.get<Profile>(`/profiles/${username}`),

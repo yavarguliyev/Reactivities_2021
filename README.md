@@ -174,6 +174,8 @@ pm.test('has pagination header', function () {
 - npm install @microsoft/signalr
 - npm install --save react-infinite-scroll --- or --- npm install react-infinite-scroller --legacy-peer-deps
 - npm install @types/react-infinite-scroller
+- npm install @types/facebook-js-sdk --save-dev
+- npm install rimraf --save-dev
 
 # Publish
 
@@ -199,3 +201,22 @@ https://yavar-activities.herokuapp.com/
 - [http security checker](https://securityheaders.com) - to make sure that the application that you created is safe
 
 - [documentation](https://documenter.getpostman.com/view/11043766/Tz5tYbfC)
+
+- [facebook-developers](https://developers.facebook.com)
+
+```javascript
+facebook test accounts
+```
+
+```
+- will_ixgiaos_will@tfbnw.net
+- james_vkoeixf_james@tfbnw.net
+- keiran_lussigx_keiran@tfbnw.net
+- Pa$$w0rd
+```
+
+> # GitHub new branch
+
+```javascript
+git checkout -b fbLogin
+```

@@ -6,7 +6,6 @@ import { Route, Switch, useLocation } from 'react-router';
 import HomePage from '../../features/home/HomePage';
 import ActivityForm from '../../features/activities/form/ActivityForm';
 import ActivityDetails from '../../features/activities/details/ActivityDetails';
-import TestError from '../../features/errors/TestErrors';
 import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/errors/NotFound';
 import ServerError from '../../features/errors/ServerError';
@@ -16,20 +15,21 @@ import LoadingComponents from './LoadingComponents';
 import ModalContainer from '../common/modals/ModalContainer';
 import ProfilePage from '../../features/profiles/ProfilePage';
 import PrivateRoute from './PrivateRoute';
+import TestErrors from '../../features/errors/TestErrors';
 
 function App() {
-  const { commonStore: { token, setAppLoaded, appLoaded }, userStore: { getUser } } = useStore();
   const location = useLocation();
+  const { commonStore, userStore } = useStore();
 
   useEffect(() => {
-    if (token) {
-      getUser().finally(() => setAppLoaded());
+    if (commonStore.token) {
+      userStore.getUser().finally(() => commonStore.setAppLoaded());
     } else {
-      setAppLoaded();
+      userStore.getFacebookLoginStatus().then(() => commonStore.setAppLoaded());
     }
-  }, [token, getUser, setAppLoaded]);
+  }, [commonStore, userStore])
 
-  if (!appLoaded) return <LoadingComponents content='Loading app...' />
+  if (!commonStore.appLoaded) return <LoadingComponents content='Loading app...' />
 
   return (
     <>
@@ -45,9 +45,9 @@ function App() {
               <Switch>
                 <PrivateRoute exact path='/activities' component={ActivityDashboard} />
                 <PrivateRoute path='/activities/:id' component={ActivityDetails} />
-                <PrivateRoute key={location.key} path={['/create-activity', '/manage/:id']} component={ActivityForm} />
+                <PrivateRoute key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
                 <PrivateRoute path='/profiles/:username' component={ProfilePage} />
-                <PrivateRoute path='/errors' component={TestError} />
+                <PrivateRoute path='/errors' component={TestErrors} />
                 <Route path='/server-error' component={ServerError} />
                 {/* <Route path='/account/registerSuccess' component={RegisterSuccess} />
                 <Route path='/account/verifyEmail' component={ConfirmEmail} /> */}

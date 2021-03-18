@@ -22,10 +22,10 @@ export const store: Store = {
   modalStore: new ModalStore(),
   profileStore: new ProfileStore(),
   commentStore: new CommentStore()
-};
+}
 
 export const StoreContext = createContext(store);
 
-export const useStore = () => {
+export function useStore() {
   return useContext(StoreContext);
-};
+}

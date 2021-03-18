@@ -3,7 +3,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { ChatComment } from "../models/comment";
 import { store } from "./store";
 
-class CommentStore {
+export default class CommentStore {
   comments: ChatComment[] = [];
   hubConnection: HubConnection | null = null;
 
@@ -59,5 +59,3 @@ class CommentStore {
     }
   }
 }
-
-export default CommentStore;
