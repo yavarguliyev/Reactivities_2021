@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using System.Threading.Tasks;
 using API.Services;
@@ -18,40 +19,46 @@ namespace API.Extensions
     public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration _configuration)
     {
       services
-      .AddIdentityCore<AppUser>(opt => { opt.Password.RequireNonAlphanumeric = false; })
-      .AddEntityFrameworkStores<DataContext>()
-      .AddSignInManager<SignInManager<AppUser>>();
+        .AddIdentityCore<AppUser>(opt =>
+          {
+            opt.Password.RequireNonAlphanumeric = false;
+          })
+        .AddEntityFrameworkStores<DataContext>()
+        .AddSignInManager<SignInManager<AppUser>>()
+        .AddDefaultTokenProviders();
 
       var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["TokenKey"]));
 
       services
-      .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-      .AddJwtBearer(opt =>
-      {
-        opt.TokenValidationParameters = new TokenValidationParameters
+        .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(opt =>
         {
-          ValidateIssuerSigningKey = true,
-          IssuerSigningKey = key,
-          ValidateIssuer = false,
-          ValidateAudience = false
-        };
-
-        opt.Events = new JwtBearerEvents
-        {
-          OnMessageReceived = context =>
+          opt.TokenValidationParameters = new TokenValidationParameters
           {
-            var accessToken = context.Request.Query["access_token"];
-            var path = context.HttpContext.Request.Path;
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = key,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+          };
 
-            if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
+          opt.Events = new JwtBearerEvents
+          {
+            OnMessageReceived = context =>
             {
-              context.Token = accessToken;
-            }
+              var accessToken = context.Request.Query["access_token"];
+              var path = context.HttpContext.Request.Path;
 
-            return Task.CompletedTask;
-          }
-        };
-      });
+              if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
+              {
+                context.Token = accessToken;
+              }
+
+              return Task.CompletedTask;
+            }
+          };
+        });
 
       services.AddAuthorization(opt =>
       {

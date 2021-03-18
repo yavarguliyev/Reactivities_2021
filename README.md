@@ -218,7 +218,7 @@ facebook test accounts
 > # GitHub new branch
 
 ```javascript
-git checkout -b fbLogin
+git checkout -b [new branch]
 git checkout main
 git merge [branch name]
 ```
