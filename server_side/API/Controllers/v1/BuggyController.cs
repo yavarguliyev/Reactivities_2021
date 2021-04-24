@@ -1,9 +1,11 @@
 using System;
 using API.Controllers.v1;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+  [Authorize(Policy = "IsActivityHost")]
   public class BuggyController : BaseApiController
   {
     [HttpGet("not-found")]
