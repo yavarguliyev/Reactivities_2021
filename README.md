@@ -224,3 +224,4 @@ git merge [branch name]
 ```
 
 - [using the fake email address for checking the email confirmation](https://10minutemail.net)
+- [the website that sets up the URL for Heroku free trial staying awake](https://kaffeine.herokuapp.com/)
