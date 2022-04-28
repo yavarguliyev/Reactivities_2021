@@ -1,0 +1,796 @@
+{
+	"info": {
+		"_postman_id": "9b44a74d-ec8d-492e-afe8-b8cbcab88683",
+		"name": "Reactivities",
+		"description": "Social media app where you can follow or have followers. You can also like the pictures or unlike them. It has all the necessary functionalities that we need for social media.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Activity",
+			"item": [
+				{
+					"name": "GET /api/v1/activities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reactivities}}/api/v1/activities",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"activities"
+							]
+						},
+						"description": "Get activity list for logged in user"
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/v1/activities/{id}/attend",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "JSON Type",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{reactivities}}/api/v1/activities/02bc2e70-4055-4307-90b1-e11fed2d1b01/attend",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"activities",
+								"02bc2e70-4055-4307-90b1-e11fed2d1b01",
+								"attend"
+							]
+						},
+						"description": "Update the activity if the user logged in and if activity is exist or not create or update attendee."
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/v1/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reactivities}}/api/v1/activities/cec2b601-8776-47be-895e-713db30ead3c",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"activities",
+								"cec2b601-8776-47be-895e-713db30ead3c"
+							]
+						},
+						"description": "Get activity by id for logged in user"
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/v1/activities",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');",
+									"",
+									"pm.environment.set('activityDate', moment().add(14, 'days').toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "JSON Type",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{$guid}}\",\n  \"title\": \"Test Create Activity\",\n  \"date\": \"{{activityDate}}\",\n  \"description\": \"Description of the test event\",\n  \"category\": \"Culture\",\n  \"city\": \"London\",\n  \"venue\": \"Tower of London\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{reactivities}}/api/v1/activities",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"activities"
+							]
+						},
+						"description": "Create new activity for logged in user"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /api/v1/activities/{{id}",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');",
+									"",
+									"pm.environment.set('activityDate', moment().add(14, 'days').toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"description": "JSON Type",
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Test Create Activity updated\",\n  \"date\": \"{{activityDate}}\",\n  \"description\": \"Description of the test event updated\",\n  \"category\": \"Culture updated\",\n  \"city\": \"London\",\n  \"venue\": \"Tower of London\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{reactivities}}/api/v1/activities/cec2b601-8776-47be-895e-713db30ead3c",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"activities",
+								"cec2b601-8776-47be-895e-713db30ead3c"
+							]
+						},
+						"description": "Edit activity for logged in user"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /api/v1/activities/{{id}",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{reactivities}}/api/v1/activities/24df316a-9d48-4fd0-828f-033db6a5a7bf",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"activities",
+								"24df316a-9d48-4fd0-828f-033db6a5a7bf"
+							]
+						},
+						"description": "Delete activity for logged in user"
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/v1/activities?pageSize=1&pageNumber=2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"",
+									"pm.test(\"response is 200\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"has all properties\", function() {",
+									"    pm.expect(data[0]).to.have.property('id');",
+									"    pm.expect(data[0]).to.have.property('title');",
+									"    pm.expect(data[0]).to.have.property('description');",
+									"    pm.expect(data[0]).to.have.property('date');",
+									"    pm.expect(data[0]).to.have.property('city');",
+									"    pm.expect(data[0]).to.have.property('venue');",
+									"    pm.expect(data[0]).to.have.property('attendees');",
+									"});",
+									"",
+									"pm.test(\"has pagination header\", function() {",
+									"    pm.response.to.have.header('pagination');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reactivities}}/api/v1/activities?pageSize=1&pageNumber=2",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"activities"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "1"
+								},
+								{
+									"key": "pageNumber",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Get activity list for logged in user and by params"
+					},
+					"response": []
+				}
+			],
+			"description": "Activities table CRUD functionalities.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "POST /api/v1/account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function() {",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if(pm.test(\"Has properties\")) {",
+									"    pm.globals.set(\"TOKEN\", user.token);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('TOKEN');",
+									"    pm.expect(token).to.eql(user.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "JSON Type",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"bob@test.com\",\n    \"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{reactivities}}/api/v1/account",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"account"
+							]
+						},
+						"description": "Login to get the user"
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/v1/account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"TOKEN\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reactivities}}/api/v1/account",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"account"
+							]
+						},
+						"description": "Get logged in current user"
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/v1/account/register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "JSON Type",
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"displayName\": \"Alex\",\n    \"userName\": \"alex\",\n    \"email\": \"nix10784@cuoly.com\",\n    \"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{reactivities prod}} /api/v1/account/register",
+							"host": [
+								"{{reactivities prod}} "
+							],
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"register"
+							]
+						},
+						"description": "Register new user if the user does not exist in the database"
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication folder for login, register, etc."
+		},
+		{
+			"name": "Photos",
+			"item": [
+				{
+					"name": "POST /api/v1/photos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"description": "JSON Type",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "File",
+									"type": "file",
+									"src": "/Users/yavar/Downloads/download.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{reactivities}}/api/v1/photos",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"photos"
+							]
+						},
+						"description": "Upload photo if the user logged in"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /api/v1/photos/{{id}}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{reactivities}}/api/v1/photos/ptu8p5mh9uoy2hvw908f",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"photos",
+								"ptu8p5mh9uoy2hvw908f"
+							]
+						},
+						"description": "Delete photo if the user logged in"
+					},
+					"response": []
+				},
+				{
+					"name": "POST /api/v1/photos/{{id}}/setmain",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{reactivities}}/api/v1/photos/fqafze1l2fbcuhdzajhz/setmain",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"photos",
+								"fqafze1l2fbcuhdzajhz",
+								"setmain"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Photos CRUD functionalities for logged in user"
+		},
+		{
+			"name": "Profiles",
+			"item": [
+				{
+					"name": "GET /api/v1/profiles/{username}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reactivities}}/api/v1/profiles/tom",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"tom"
+							]
+						},
+						"description": "Get logged in user info"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /api/v1/profiles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "JSON Type",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"displayName\": \"bob\"\n}"
+						},
+						"url": {
+							"raw": "{{reactivities}}/api/v1/profiles",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles"
+							]
+						},
+						"description": "Update logged in user info"
+					},
+					"response": []
+				}
+			],
+			"description": "User profiles CRUD functionalities"
+		},
+		{
+			"name": "Follow",
+			"item": [
+				{
+					"name": "POST /api/v1/follow/{username}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{reactivities}}/api/v1/follow/tom",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"follow",
+								"tom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /api/v1/follow/{username}?predicate={predicate}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reactivities}}/api/v1/follow/tom?predicate=followers",
+							"host": [
+								"{{reactivities}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"follow",
+								"tom"
+							],
+							"query": [
+								{
+									"key": "predicate",
+									"value": "followers"
+								}
+							]
+						},
+						"description": "Get followed user for logged in user"
+					},
+					"response": []
+				}
+			],
+			"description": "Following and Unfollowing users for logged in user"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
